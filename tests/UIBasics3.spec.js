@@ -7,7 +7,7 @@ const {test, expect} = require('@playwright/test');
 
 // how to wait for the element to be visible - waitForLoadState('networkidle'), waitForNetworkIdle
 
-test.only('Basic UI Test8', async ({page}) =>
+test('Basic UI Test8', async ({page}) =>
 {
     // wait for the element to be visible - waitFor
     await page.goto('https://www.myntra.com/shop/men');
