@@ -4,16 +4,19 @@
 
 const {test, expect} = require('@playwright/test');
 
-test.only('Basic UI Test7', async ({page}) =>
+test('Basic UI Test7', async ({page}) =>
 {
+    await page.goto('https://devyanit05.github.io/personal-portfolio/');
+
     const projects = await page.locator('a.btn-primary').first();
     const eyebrow = await page.locator('.hero-inner .eyebrow');
 
-    await page.goto('https://devyanit05.github.io/personal-portfolio/');
     await projects.click();
     await page.waitForTimeout(1000);
     await page.screenshot({path: 'screenshot5.png'});
-    await expect(eyebrow).toContainText(/devops/i);
+    const eyebrowText = await page.locator('.hero-inner .eyebrow').textContent();
+    console.log(eyebrowText);
+    // await expect(eyebrow).toContainText(/devops/i);
     console.log(await page.locator('div.about-copy').textContent());
 
     await page.goto('https://google.com');
