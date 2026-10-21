@@ -3,7 +3,7 @@
 
 const {test, expect} = require('@playwright/test');
 
-test.only('Basic UI Test9', async ({page}) =>
+test('Basic UI Test9', async ({page}) =>
 {
     await page.goto('https://rahulshettyacademy.com/client/#/auth/register');
     // dropdown : two types - select and non-select
