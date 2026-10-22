@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './tests',
   use: {
     browserName: 'chromium',
-    headless: false,
+    headless: true,
   },
 });
 
