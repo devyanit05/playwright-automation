@@ -19,12 +19,11 @@ test.only('Basic UI Test10', async ({browser}) =>
     await expect(resume).toHaveAttribute('href', /.*\.pdf/);
     // Promise.all is used to wait for all the promises to be fulfilled
     // this will return an array of the results of the promises
-    const [page2] = await Promise.all([
-    context.waitForEvent('page'), 
-    resume.click()
-    ]);
-    await page2.waitForTimeout(5000);
-    await expect(page2).toHaveURL('https://devyanit05.github.io/personal-portfolio/assets/resume/Devyani_Thokal_Resume.pdf');
-    await page2.waitForTimeout(10000);
-    await page2.screenshot({path: 'screenshot11.png'});
+    // 
+    const [download] = await Promise.all([
+        page.waitForEvent('download'),
+        resume.click(),
+      ]);
+      
+      expect(download.suggestedFilename()).toBe('Devyani_Thokal_Resume.pdf');
 });
