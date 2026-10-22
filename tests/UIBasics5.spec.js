@@ -22,7 +22,8 @@ test.only('Basic UI Test10', async ({browser}) =>
     const [page2] = await Promise.all([
     context.waitForEvent('page'), 
     resume.click()
-    ])
+    ]);
+    await page2.waitForTimeout(5000);
     await expect(page2).toHaveURL('https://devyanit05.github.io/personal-portfolio/assets/resume/Devyani_Thokal_Resume.pdf');
     await page2.waitForTimeout(10000);
     await page2.screenshot({path: 'screenshot11.png'});
