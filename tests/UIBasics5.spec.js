@@ -1,4 +1,10 @@
 // validating attributes of the elements
+// Handling child windows
+
+// promise has 3 states: pending, fulfilled, rejected
+// pending: the promise is not yet fulfilled or rejected
+// fulfilled: the promise is fulfilled
+// rejected: the promise is rejected
 
 const {test, expect} = require('@playwright/test');
 
@@ -8,7 +14,16 @@ test.only('Basic UI Test10', async ({browser}) =>
     const page = await context.newPage();
     await page.goto('https://devyanit05.github.io/personal-portfolio/');
 
-    const resume = page.locator("[href*='.pdf']");
+    const resume = page.locator("[href*='Resume.pdf']");
 
-    await expect(resume).toHaveAttribute('href', 'https://devyanit05.github.io/personal-portfolio/assets/resume.pdf');
+    await expect(resume).toHaveAttribute('href', /.*\.pdf/);
+    // Promise.all is used to wait for all the promises to be fulfilled
+    // this will return an array of the results of the promises
+    const [page2] = await Promise.all([
+    context.waitForEvent('page'), 
+    resume.click()
+    ])
+    await expect(page2).toHaveURL('https://devyanit05.github.io/personal-portfolio/assets/resume/Devyani_Thokal_Resume.pdf');
+    await page2.waitForTimeout(10000);
+    await page2.screenshot({path: 'screenshot11.png'});
 });
