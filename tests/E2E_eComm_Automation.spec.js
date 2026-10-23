@@ -2,7 +2,7 @@
 
 const {test, expect} = require('@playwright/test');
 
-test.only('order placement', async ({browser}) =>
+test('order placement', async ({browser}) =>
 {
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -74,6 +74,25 @@ test.only('order placement', async ({browser}) =>
     await expect(page.locator('.hero-primary')).toHaveText(/thankyou for the order/i);
     await page.screenshot({path: 'order_placed_successfully.png'});
 
-    await page.getByRole('button', { name: /Download/ }).click();
+    const orderId = await page.locator('label.ng-star-inserted').textContent();
+    console.log(orderId);
+    const ordersBtn = page.getByRole('button', { name: /ORDERS/ });
+    await ordersBtn.click();
+    const orderTable = page.locator('tbody');
+    const tableRows = await orderTable.locator('tr');
+    await tableRows.first().waitFor();
+    const rowCount = await tableRows.count();
+    for (let i = 0; i < rowCount; i++)
+    {
+        const row = tableRows.nth(i);
+        const rowId = await row.locator('th').textContent();
+        console.log(rowId);
+        if(orderId.includes(rowId.trim()))
+        {
+            console.log("Order found");
+            break;
+        }
+    }
+    // await page.getByRole('button', { name: /Download/ }).click();
     await page.pause();
 });
