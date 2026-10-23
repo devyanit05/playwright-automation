@@ -5,6 +5,8 @@ export default defineConfig({
   use: {
     browserName: 'chromium',
     headless: true,
+    screenshot: 'on',
+    trace: 'retain-on-failure',
   },
 });
 
